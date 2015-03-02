@@ -121,6 +121,24 @@ class SnoopSpec extends WordSpec with Matchers with BeforeAndAfterAll with Given
       resp.headers("Content-Type") should equal("text/plain; charset=UTF-8")
     }
 
+    "support HTTP PATCH" in {
+      val url = new URL(path + "snoop/")
+      val conn = url.openConnection().asInstanceOf[HttpURLConnection]
+      sendPatchRequest(conn, URLENCODED_CONTENT_TYPE, CharsetUtil.UTF_8, "userid=joe&password=guessme")
+      val resp = getResponseContent(conn)
+
+      resp.status should equal("200")
+      resp.content.length should be > 0
+      resp.content should include("METHOD: PATCH")
+      resp.content should include("REQUEST_URI: /snoop/")
+      resp.content should include("  userid=joe")
+      resp.content should include("  password=guessme")
+
+      resp.headers("Date").length should be > 0
+      resp.headers("Content-Length").length should be > 0
+      resp.headers("Content-Type") should equal("text/plain; charset=UTF-8")
+    }
+
     "support HTTP PUT" in {
       val url = new URL(path + "snoop/")
       val conn = url.openConnection().asInstanceOf[HttpURLConnection]

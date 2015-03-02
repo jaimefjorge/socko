@@ -36,6 +36,13 @@ class MethodRouteSpec extends WordSpec with Matchers {
       result should be(true)
     }
 
+    "route PATCH method" in {
+      var result = false
+      val r = Routes({ case PATCH(x) => result = true })
+      r(TestContext(EndPoint("PATCH", "localhost", "file.html")))
+      result should be(true)
+    }
+
     "route POST method" in {
       var result = false
       val r = Routes({ case POST(x) => result = true })

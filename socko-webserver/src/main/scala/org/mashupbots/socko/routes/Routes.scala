@@ -28,7 +28,7 @@ import org.mashupbots.socko.events.WebSocketHandshakeEvent
  * list of PartialFunctions.
  *
  * To assist with routing, Socko has the following extractors:
- *  - HTTP Method: GET, POST, PUT, DELETE, HEAD, CONNECT, OPTIONS, TRACE
+ *  - HTTP Method: GET, POST, PUT, PATCH, DELETE, HEAD, CONNECT, OPTIONS, TRACE
  *  - HTTP Path: Path, PathSegments, PathRegex
  *  - HTTP Host: Host, HostSegments, HostRegex
  *  - HTTP Query String: QueryString, QueryStringRegex
@@ -214,6 +214,21 @@ object POST extends Method("POST")
  * }}}
  */
 object PUT extends Method("PUT")
+
+/**
+ * Matches [[org.mashupbots.socko.events.EndPoint]]s of [[org.mashupbots.socko.events.SockoEvent]]s
+ * where the method is set to `PATCH`.
+ *
+ * For example:
+ * {{{
+ *   val r = Routes({
+ *     case PATCH(ctx) => {
+ *       ...
+ *     }
+ *   })
+ * }}}
+ */
+object PATCH extends Method("PATCH")
 
 /**
  * Matches [[org.mashupbots.socko.events.EndPoint]]s of [[org.mashupbots.socko.events.SockoEvent]]s

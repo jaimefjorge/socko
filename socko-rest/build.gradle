@@ -28,6 +28,7 @@ dependencies {
     compile group: 'org.json4s', name: "json4s-native_$scalaVersion", version: '3.2.11'
     compile group: 'org.json4s', name: "json4s-ext_$scalaVersion", version: '3.2.11'
     compile group: 'org.mashupbots.socko', name: "socko-webserver_$scalaVersion", version: '0.6.0'
+    compile group: 'org.apache.httpcomponents', name: "httpclient", version: '4.4'
     testCompile group: 'org.scalatest', name: "scalatest_2.11", version: '2.2.1'
 }
 
