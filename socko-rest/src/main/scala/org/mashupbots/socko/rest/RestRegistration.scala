@@ -137,7 +137,7 @@ abstract class RestRegistration {
  */
 object Method extends Enumeration {
   type Method = Value
-  val GET, POST, PUT, DELETE = Value
+  val GET, POST, PUT, DELETE, PATCH = Value
 }
 
 /**

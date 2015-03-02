@@ -17,13 +17,13 @@ package org.mashupbots.socko.rest
 
 import java.util.Date
 
-import scala.reflect.runtime.{ universe => ru }
-
 import org.json4s.NoTypeHints
-import org.json4s.native.{ Serialization => json }
 import org.json4s.ext._
+import org.json4s.native.{Serialization => json}
 import org.mashupbots.socko.events.HttpRequestEvent
 import org.mashupbots.socko.infrastructure.DateUtil
+
+import scala.reflect.runtime.{universe => ru}
 
 /**
  * Deserializes incoming request data into a [[org.mashupbots.socko.rest.RestRequest]]
@@ -224,7 +224,7 @@ object RequestParamBinding {
         HeaderBinding(config, headerParam, param.typeSignature, required)
 
       case bodyParam: BodyParam =>
-        if (endPoint.method != "PUT" && endPoint.method != "POST") {
+        if (endPoint.method != "PUT" && endPoint.method != "POST" && endPoint.method != "PATCH") {
           throw RestDefintionException(s"'${paramName}' in '${requestClassName}' cannot be bound to the request body using a '${endPoint.method}' operation.")
         }
         val tpe = param.typeSignature
@@ -242,8 +242,7 @@ object RequestParamBinding {
           if (tpeCategory == RequestBodyDataType.Object) {
             if (required) Some(Class.forName(param.typeSignature.typeSymbol.asClass.fullName))
             else {
-              // Extract underlying type from Option to help with deserlialization
-              import ru._ // Remove unchecked warning: https://issues.scala-lang.org/browse/SI-6338
+              // Extract underlying type from Option to help with deserlialization // Remove unchecked warning: https://issues.scala-lang.org/browse/SI-6338
               val targs = param.typeSignature match { case ru.TypeRef(_, _, args) => args }
               Some(Class.forName(targs(0).typeSymbol.asClass.fullName))
             }

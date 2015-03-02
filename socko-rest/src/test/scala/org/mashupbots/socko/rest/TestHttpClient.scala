@@ -15,16 +15,14 @@
 //
 package org.mashupbots.socko.rest
 
-import java.io.BufferedReader
-import java.io.ByteArrayOutputStream
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URLConnection
+import java.io.{BufferedReader, ByteArrayOutputStream, InputStreamReader}
+import java.net.{HttpURLConnection, URLConnection}
 import java.nio.charset.Charset
 import java.util.Hashtable
-import java.util.zip.GZIPInputStream
-import java.util.zip.InflaterInputStream
+import java.util.zip.{GZIPInputStream, InflaterInputStream}
 
+import org.apache.http.client.methods.{CloseableHttpResponse, HttpUriRequest}
+import org.apache.http.impl.client.CloseableHttpClient
 import org.mashupbots.socko.infrastructure.CharsetUtil
 
 /**
@@ -34,6 +32,7 @@ trait TestHttpClient {
 
   val POST = "POST"
   val PUT = "PUT"
+  val PATCH = "PATCH"
   val URLENCODED_CONTENT_TYPE = "application/x-www-form-urlencoded"
   val BOUNDARY = "----------V2ymHFg03ehbqgZCaKO6jy"
 
@@ -47,6 +46,23 @@ trait TestHttpClient {
    */
   def sendPutRequest(conn: HttpURLConnection, contentType: String, charset: Charset, content: String) {
     conn.setRequestMethod(PUT)
+    conn.setRequestProperty("Content-Type", contentType)
+    conn.setDoOutput(true)
+    val os = conn.getOutputStream()
+    os.write(content.getBytes(charset))
+    os.flush()
+  }
+
+  /**
+   * Send a patch request
+   *
+   * @param conn HTTP Connection
+   * @param contentType MIME type of content
+   * @param charset Character set
+   * @param content Text to send
+   */
+  def sendPatchRequest(conn: HttpURLConnection, contentType: String, charset: Charset, content: String) {
+    conn.setRequestMethod(PATCH)
     conn.setRequestProperty("Content-Type", contentType)
     conn.setDoOutput(true)
     val os = conn.getOutputStream()
@@ -69,6 +85,10 @@ trait TestHttpClient {
     val os = conn.getOutputStream()
     os.write(content.getBytes(charset))
     os.flush()
+  }
+
+  def execute(client: CloseableHttpClient, request: HttpUriRequest): CloseableHttpResponse = {
+    client.execute(request)
   }
 
   /**

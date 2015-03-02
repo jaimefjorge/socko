@@ -33,6 +33,7 @@ trait TestHttpClient {
 
   val POST = "POST"
   val PUT = "PUT"
+  val PATCH = "PATCH"
   val URLENCODED_CONTENT_TYPE = "application/x-www-form-urlencoded"
   val BOUNDARY = "----------V2ymHFg03ehbqgZCaKO6jy"
 
@@ -63,6 +64,23 @@ trait TestHttpClient {
    */
   def sendPostRequest(conn: HttpURLConnection, contentType: String, charset: Charset, content: String) {
     conn.setRequestMethod(POST)
+    conn.setRequestProperty("Content-Type", contentType)
+    conn.setDoOutput(true)
+    val os = conn.getOutputStream()
+    os.write(content.getBytes(charset))
+    os.flush()
+  }
+
+  /**
+   * Send a patch request
+   *
+   * @param conn HTTP Connection
+   * @param contentType MIME type of content
+   * @param charset Character set
+   * @param content Text to send
+   */
+  def sendPatchRequest(conn: HttpURLConnection, contentType: String, charset: Charset, content: String) {
+    conn.setRequestMethod(PATCH)
     conn.setRequestProperty("Content-Type", contentType)
     conn.setDoOutput(true)
     val os = conn.getOutputStream()

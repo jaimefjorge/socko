@@ -43,6 +43,7 @@ case class EndPoint(
   lazy val isHEAD = method == "HEAD"
   lazy val isPOST = method == "POST"
   lazy val isPUT = method == "PUT"
+  lazy val isPATCH = method == "PATCH"
   lazy val isDELETE = method == "DELETE"
   lazy val isTRACE = method == "TRACE"
   lazy val isCONNECT = method == "CONNECT"
