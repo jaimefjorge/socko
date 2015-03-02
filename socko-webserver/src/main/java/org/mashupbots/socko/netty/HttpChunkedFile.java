@@ -188,4 +188,14 @@ public class HttpChunkedFile implements ChunkedInput<HttpContent> {
         }
         
     }
+
+    @Override
+    public long length() {
+        return endOffset - startOffset;
+    }
+
+    @Override
+    public long progress() {
+        return offset - startOffset;
+    }
 }
