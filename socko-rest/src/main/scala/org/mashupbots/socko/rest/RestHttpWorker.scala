@@ -95,17 +95,17 @@ class RestHttpWorker(registry: RestRegistry, httpRequestEvent: HttpRequestEvent)
 
       // Find operation
       val op = registry.findOperation(httpRequestEvent.endPoint)
-      if (op.isEmpty) {
+      //if (op.isEmpty) {
         // Operation not found. See if this is a request for api-docs 
         // More efficient to do this after operation lookup rather than take a hit on every request 
-        val docs = registry.swaggerApiDocs.get(httpRequestEvent.endPoint.path)
+        /*val docs = registry.swaggerApiDocs.get(httpRequestEvent.endPoint.path)
         if (docs.isDefined) {
           httpRequestEvent.response.write(docs.get, "application/json;charset=UTF-8")
           stop(FSM.Normal)
         } else {
           throw RestNotFoundException(s"Cannot find operation for request to: '${httpRequestEvent.endPoint.method} ${httpRequestEvent.endPoint.path}'")
-        }
-      } else {
+        }*/
+      //} else {
         // Found operation so build request and dispatch
         val op1 = op.get
         val opDeserializer = op1.deserializer
@@ -129,7 +129,7 @@ class RestHttpWorker(registry: RestRegistry, httpRequestEvent: HttpRequestEvent)
           future pipeTo self
           goto(WaitingForResponse) using Data(op = op, req = Some(restRequest))
         }
-      }
+      //}
 
     case Event(msg: ProcessError, data: Data) =>
       // Error raised from unhandled exception after this actor restarts

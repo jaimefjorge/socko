@@ -30,7 +30,7 @@ import org.mashupbots.socko.infrastructure.ReflectUtil
  */
 case class RestRegistry(
   operations: Seq[RestOperation],
-  swaggerApiDocs: SwaggerApiDocs,
+  //swaggerApiDocs: SwaggerApiDocs,
   config: RestConfig) {
 
   /**
@@ -146,9 +146,9 @@ object RestRegistry extends Logger {
       }
     })
 
-    val swaggerApiDoc = SwaggerApiDocs(restOperations, config, rm)
+    //val swaggerApiDoc = SwaggerApiDocs(restOperations, config, rm)
 
-    RestRegistry(restOperations, swaggerApiDoc, config)
+    RestRegistry(restOperations /*swaggerApiDoc*/, config)
   }
 
   /**
