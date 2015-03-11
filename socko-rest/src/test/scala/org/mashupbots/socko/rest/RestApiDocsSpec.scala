@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-package org.mashupbots.socko.rest
+/*package org.mashupbots.socko.rest
 
 import scala.reflect.runtime.{ universe => ru }
 
@@ -281,4 +281,4 @@ class RestApiDocsSpec extends WordSpec with Matchers with GivenWhenThen with Log
   }
 }
 
-case class Cow(moo: String)
+case class Cow(moo: String)*/
