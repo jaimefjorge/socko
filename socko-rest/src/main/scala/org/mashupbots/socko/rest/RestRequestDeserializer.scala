@@ -17,6 +17,7 @@ package org.mashupbots.socko.rest
 
 import java.util.Date
 
+import com.layer.recon.models.Message.RecipientStatuses
 import org.json4s.NoTypeHints
 import org.json4s.ext._
 import org.json4s.native.{Serialization => json}
@@ -514,7 +515,7 @@ case class BodyBinding(
         } else {
           val s = content.toString()
           try {
-            val formats = json.formats(NoTypeHints) ++ JavaTypesSerializers.all
+            val formats = json.formats(NoTypeHints) + new EnumNameSerializer(RecipientStatuses) ++ JavaTypesSerializers.all
             val scalaType = org.json4s.reflect.Reflector.scalaTypeOf(objectClass.get)
             val scalaManifest = org.json4s.reflect.ManifestFactory.manifestOf(scalaType)
             val data = json.read(s)(formats, scalaManifest)
